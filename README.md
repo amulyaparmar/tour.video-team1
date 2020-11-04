@@ -2,8 +2,8 @@
 
 ## Contributing
 
-- Clone the repository: `git clone https://github.com/BenMob/leaseMagnets.git`
-- Navigate in the app folder: `cd leaseMagnets/app`
+- Make sure you have installed Expo cli: `npm install --global expo-cli` (test you have it installe with expo --version)
+- Navigate in the app folder: `cd /app`
 - Intall dependencies: `npm install`
 
 To run your project, navigate to the directory and run one of the following npm commands.
