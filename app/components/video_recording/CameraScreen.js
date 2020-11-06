@@ -1,20 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react'
 import {
-  StyleSheet,  // For styling 
-  Dimensions,  // TBD
-  View,        // For User Interface 
-  Text,        // For texts
-  TouchableOpacity,   // TBD
-  SafeAreaView,       // For user interface
-} from "react-native";   // Keep these in this file
+  StyleSheet,             // For styling 
+  Dimensions,             // For Screen Dimensions
+  View,                   // For User Interface 
+  Text,                   // For texts
+  TouchableOpacity,       // To make views respond properly to touches
+  SafeAreaView,           // For user interface
+} from "react-native";    // Keep these in this file
 
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
+
+/**************
+ * Camera Page
+ */
+
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const closeButtonSize = Math.floor(WINDOW_HEIGHT * 0.032);
 const captureSize = Math.floor(WINDOW_HEIGHT * 0.09);
 
-function CameraPage() {
+function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [isPreview, setIsPreview] = useState(false);
@@ -30,7 +35,7 @@ function CameraPage() {
   }, []);
 
   /*
-    Used in the Camera component to determin when the camera is ready
+    Used in the Camera component to determine when the camera is ready
     Might want to move it in the Camera Component file
   */
   const onCameraReady = () => {
@@ -106,9 +111,6 @@ function CameraPage() {
     </TouchableOpacity>
   );
 
-  /*
-    Figure out how to call this method with the URI link.
-  */
   const renderVideoPlayer = () => (
     <Video
       source={{ uri: videoSource }}
@@ -117,9 +119,9 @@ function CameraPage() {
     />
   );
   
-/*
+  /*
     Appears up top when recording starts
-*/
+  */
   const renderVideoRecordIndicator = () => (
     <View style={styles.recordIndicatorContainer}>
       <View style={styles.recordDot} />
@@ -151,7 +153,7 @@ function CameraPage() {
 
     /*
       TODO: Move the camera component in its own file
-      then import it. 
+      then import it? or not. TBD  
     */
     <SafeAreaView style={styles.container}>
       <Camera
@@ -174,7 +176,7 @@ function CameraPage() {
   )
 };
 
-export default CameraPage
+export default CameraScreen
 
 
 const styles = StyleSheet.create({

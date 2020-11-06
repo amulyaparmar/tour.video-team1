@@ -1,24 +1,30 @@
 import React from "react";
-import CameraPage  from './components/video_recording/CameraPage'
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import HomeScreen from './components/HomeScreen'
+import CameraScreen from './components/video_recording/CameraScreen'
+import { NavigationContainer, StackActions } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
+
+const Stack = createStackNavigator();
 export default function App() {
   return (
-    <CameraPage />
+    <NavigationContainer>
+      <Stack.Navigator>
+          <Stack.Screen 
+              name="Home" 
+              component={HomeScreen} 
+              options={{title: 'Welcome'}}
+          />
+          <Stack.Screen 
+              name="Camera" 
+              component={CameraScreen} 
+              options={{title: 'Camera'}}
+          />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-/*
- <View style={styles.container}>
-      
-      <Text>Hello World</Text>
-      <StatusBar style="auto" />
-    </View>
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})*/
+
+ 
+
+
