@@ -1,3 +1,4 @@
+// @refresh reset
 import React, { useState, useRef, useEffect } from 'react'
 import {
   StyleSheet,             // For styling 
@@ -10,11 +11,10 @@ import {
 
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
+import AsyncStorage from '@react-native-community/async-storage';
+import uuid4 from "uuid4";
 
-/**************
- * Camera Page
- */
-
+const STORAGE_KEY = uuid4()
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const closeButtonSize = Math.floor(WINDOW_HEIGHT * 0.032);
 const captureSize = Math.floor(WINDOW_HEIGHT * 0.09);
@@ -34,13 +34,12 @@ function CameraScreen() {
     })();
   }, []);
 
-  /*
-    Used in the Camera component to determine when the camera is ready
-    Might want to move it in the Camera Component file
-  */
+  // Sets the camera to ready
   const onCameraReady = () => {
     setIsCameraReady(true);
   };
+
+  // Takes a picture
   const takePicture = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
@@ -54,6 +53,8 @@ function CameraScreen() {
       }
     }
   };
+
+  // Record a video
   const recordVideo = async () => {
     if (cameraRef.current) {
       try {
@@ -74,6 +75,18 @@ function CameraScreen() {
       }
     }
   };
+
+// Save the video to Async Storage | TODO: Ongoing feature
+const saveVideo = async () => {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, source)
+    alert('Video Saved Successfully')
+  } catch (e) {
+    alert('Failed to save the video')
+  }
+}
+
+  // Storps the recording
   const stopVideoRecording = () => {
     if (cameraRef.current) {
       setIsPreview(false);
@@ -82,7 +95,7 @@ function CameraScreen() {
     }
   };
 
-  // Call this function to flip the camera
+  // Flips the camera
   const switchCamera = () => {
     if (isPreview) {
       return;
@@ -94,14 +107,14 @@ function CameraScreen() {
     );
   };
 
-  
+  // Cancels preview
   const cancelPreview = async () => {
     await cameraRef.current.resumePreview();
     setIsPreview(false);
     setVideoSource(null);
   };
 
-  // Top left Cancel Button
+  // Adds a cancel preview button
   const renderCancelPreviewButton = () => (
     <TouchableOpacity onPress={cancelPreview} style={styles.closeButton}>
       <View style={[styles.closeCross, { transform: [{ rotate: "45deg" }] }]} />
@@ -110,7 +123,8 @@ function CameraScreen() {
       />
     </TouchableOpacity>
   );
-
+  
+  // Plays the video
   const renderVideoPlayer = () => (
     <Video
       source={{ uri: videoSource }}
@@ -119,15 +133,14 @@ function CameraScreen() {
     />
   );
   
-  /*
-    Appears up top when recording starts
-  */
+ // Indicates that video is being recorded
   const renderVideoRecordIndicator = () => (
     <View style={styles.recordIndicatorContainer}>
       <View style={styles.recordDot} />
       <Text style={styles.recordTitle}>{"Recording..."}</Text>
     </View>
   );
+
   const renderCaptureControl = () => (
     <View style={styles.control}>
       <TouchableOpacity disabled={!isCameraReady} onPress={switchCamera}>
@@ -150,11 +163,6 @@ function CameraScreen() {
     return <Text style={styles.text}>No access to camera</Text>;
   }
   return (
-
-    /*
-      TODO: Move the camera component in its own file
-      then import it? or not. TBD  
-    */
     <SafeAreaView style={styles.container}>
       <Camera
         ref={cameraRef}
@@ -166,7 +174,7 @@ function CameraScreen() {
           console.log("camera error", error);
         }}
       />
-        <View style={styles.container}>
+      <View style={styles.container}>
         {isVideoRecording && renderVideoRecordIndicator()}
         {videoSource && renderVideoPlayer()}
         {isPreview && renderCancelPreviewButton()}
@@ -181,7 +189,7 @@ export default CameraScreen
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   closeButton: {
     position: "absolute",
@@ -197,7 +205,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   media: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   closeCross: {
     width: "68%",

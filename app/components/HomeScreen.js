@@ -8,9 +8,8 @@ import {View, Text, StyleSheet, Button } from 'react-native'
  function HomeScreen({ navigation }){
     return (
         <View style={styles.container}>
-            <Text>Home Screen!</Text>
             <Button 
-                title='Got to Camera' 
+                title='Go to Camera' 
                 onPress={() => navigation.navigate('Camera')}
             />
         </View>
