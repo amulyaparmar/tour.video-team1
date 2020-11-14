@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, Button } from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 /**************
  * Home Screen
@@ -8,10 +8,17 @@ import {View, Text, StyleSheet, Button } from 'react-native'
  function HomeScreen({ navigation }){
     return (
         <View style={styles.container}>
-            <Button 
-                title='Go to Camera' 
+   
+            <TouchableOpacity 
+                style={styles.button}
                 onPress={() => navigation.navigate('Camera')}
-            />
+            >
+            <Text style={styles.buttonLabel}>Record Video</Text></TouchableOpacity>
+             <TouchableOpacity 
+                style={styles.button}
+                onPress={() => navigation.navigate('Videos')}
+            >
+            <Text style={styles.buttonLabel}>View Videos</Text></TouchableOpacity>
         </View>
     )
  }
@@ -21,8 +28,20 @@ import {View, Text, StyleSheet, Button } from 'react-native'
  const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ddd',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button:{
+    color: '#69bdd2',
+    backgroundColor: '#FF4500',
+    margin: 10,
+    padding: 10,
+    borderRadius: 10
+  },
+  buttonLabel:{
+    color:'#fff',
+    fontSize: 24
+  }
+
 })

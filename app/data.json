@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "name": "Video 1",
+        "uri": "blablabla.mov",
+        "timestamp": "124533543333884"
+    },
+    {
+        "id":2,
+        "name": "Video 2",
+        "uri": "blfsduga.mov",
+        "timestamp": "122346837268743"
+    },
+    {
+        "id":3,
+        "name": "Video 3",
+        "uri": "blablabdfla.mov",
+        "timestamp": "873689742368798"
+    }
+]
