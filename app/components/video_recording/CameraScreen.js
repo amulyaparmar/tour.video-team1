@@ -8,13 +8,13 @@ import {
   TouchableOpacity,       // To make views respond properly to touches
   SafeAreaView,           // For user interface
 } from "react-native";    // Keep these in this file
-
+import AsyncStorage from '@react-native-community/async-storage'
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
-import AsyncStorage from '@react-native-community/async-storage';
+import VideoEntity from "../Enities/VideoEntity"
 import uuid4 from "uuid4";
 
-const STORAGE_KEY = uuid4()
+const STORAGE_KEY = '@videos'
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const closeButtonSize = Math.floor(WINDOW_HEIGHT * 0.032);
 const captureSize = Math.floor(WINDOW_HEIGHT * 0.09);
@@ -26,13 +26,48 @@ function CameraScreen() {
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [isVideoRecording, setIsVideoRecording] = useState(false);
   const [videoSource, setVideoSource] = useState(null);
+  const [videos, setVideos] = useState([]); 
   const cameraRef = useRef();
+
+  // UseEffect gets run once to load the video list
+  useEffect(() => {
+    (async () => {
+      try {
+        const stored_videos = await AsyncStorage.getItem(STORAGE_KEY)
+        if (stored_videos != null) setVideos(JSON.parse(stored_videos))
+      } catch (error) {
+        console.error(error)      
+      }
+    })();
+  },[])
+
+  // Gets Access Permission From The Phone
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
-  }, []);
+  },[]);
+
+   //Save the video to Async Storage | TODO: Ongoing feature
+  const saveVideos = async () => {
+    try {
+      console.log("\n\n\n" + JSON.stringify(videos) + "\n\n\n")
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(videos))  
+      alert('Video Saved Successfully')
+    } catch (e) {
+      alert('Failed to save the video')
+    }
+  }
+
+  // Adds a new video
+  const handleAddNewVideo = ( source ) => {
+      if (source != null){
+        const new_video = new VideoEntity(uuid4(), 'Video Demo', source)  // New video Created
+        setVideos([...videos, new_video])
+        saveVideos() // Save the video
+      }
+  }
 
   // Sets the camera to ready
   const onCameraReady = () => {
@@ -56,6 +91,7 @@ function CameraScreen() {
 
   // Record a video
   const recordVideo = async () => {
+    console.log("Start")
     if (cameraRef.current) {
       try {
         const videoRecordPromise = cameraRef.current.recordAsync();
@@ -63,30 +99,20 @@ function CameraScreen() {
           setIsVideoRecording(true);
           const data = await videoRecordPromise;
           const source = data.uri;
-          console.log('\n\n\n' + source + '\n\n\n')
-          if (source) {
+          if (source != null) {
             setIsPreview(true);
-            console.log("video source", source);
             setVideoSource(source);
+            handleAddNewVideo(source);
           }
         }
       } catch (error) {
         console.warn(error);
       }
     }
+    console.log("End")
   };
 
-// Save the video to Async Storage | TODO: Ongoing feature
-const saveVideo = async () => {
-  try {
-    await AsyncStorage.setItem(STORAGE_KEY, source)
-    alert('Video Saved Successfully')
-  } catch (e) {
-    alert('Failed to save the video')
-  }
-}
-
-  // Storps the recording
+  // Stops the recording
   const stopVideoRecording = () => {
     if (cameraRef.current) {
       setIsPreview(false);
