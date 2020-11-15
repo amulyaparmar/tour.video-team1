@@ -60,11 +60,18 @@ function CameraScreen() {
     }
   }
 
+  const testUpdateVideos = async (videos) => {
+      setVideos(videos)
+      return
+  }
+
   // Adds a new video
-  const handleAddNewVideo = ( source ) => {
+  const handleAddNewVideo = async ( source ) => {
+      setVideoSource(source);
       if (source != null){
         const new_video = new VideoEntity(uuid4(), 'Video Demo', source)  // New video Created
-        setVideos([...videos, new_video])
+        //setVideos([...videos, new_video])
+        await testUpdateVideos([new_video, ...videos])
         saveVideos() // Save the video
       }
   }
@@ -91,7 +98,7 @@ function CameraScreen() {
 
   // Record a video
   const recordVideo = async () => {
-    console.log("Start")
+    console.log("Recording has Started")
     if (cameraRef.current) {
       try {
         const videoRecordPromise = cameraRef.current.recordAsync();
@@ -101,15 +108,14 @@ function CameraScreen() {
           const source = data.uri;
           if (source != null) {
             setIsPreview(true);
-            setVideoSource(source);
-            handleAddNewVideo(source);
+            handleAddNewVideo( source );
           }
         }
       } catch (error) {
         console.warn(error);
       }
     }
-    console.log("End")
+    console.log("Recording has ended")
   };
 
   // Stops the recording
@@ -118,6 +124,7 @@ function CameraScreen() {
       setIsPreview(false);
       setIsVideoRecording(false);
       cameraRef.current.stopRecording();
+
     }
   };
 
@@ -155,7 +162,7 @@ function CameraScreen() {
     <Video
       source={{ uri: videoSource }}
       shouldPlay={true}
-      style={styles.media}
+      style={ {width: Dimensions.get('screen').width, height: Dimensions.get('screen').height}}
     />
   );
   
@@ -173,11 +180,11 @@ function CameraScreen() {
         <Text style={styles.text}>{"Flip"}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={0.9}
         disabled={!isCameraReady}
         onLongPress={recordVideo}
         onPressOut={stopVideoRecording}
-        onPress={takePicture}
+        //onPress={takePicture}  Not Pictures Allowed ATM
         style={styles.capture}
       />
     </View>
@@ -215,7 +222,11 @@ export default CameraScreen
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFill,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   closeButton: {
     position: "absolute",
@@ -231,7 +242,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   media: {
-    ...StyleSheet.absoluteFill,
+   ...StyleSheet.absoluteFill,
   },
   closeCross: {
     width: "68%",

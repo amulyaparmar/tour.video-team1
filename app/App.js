@@ -3,7 +3,8 @@ import HomeScreen from './components/HomeScreen'
 import CameraScreen from './components/video_recording/CameraScreen'
 import VideoScreen from './components/video_recording/VideoScreen'
 import VideoForm from './components/video_recording/VideoForm'
-import { NavigationContainer, StackActions } from '@react-navigation/native'
+import VideoPreview from './components/video_recording/VideoPreview'
+import { NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 const Stack = createStackNavigator();
@@ -17,11 +18,11 @@ export default function App() {
               options={{
                 title: 'Home',
                 headerStyle: {
-                  backgroundColor: '#042f66',
+                  backgroundColor: '#222',
                 },
                   headerTintColor: '#fff',
                   headerTitleStyle: {
-                    fontWeight: 'bold',
+                    fontWeight: 'normal',
                   },
                 }}
           />
@@ -31,11 +32,11 @@ export default function App() {
               options={{
                title: 'Videos',
                headerStyle: {
-                  backgroundColor: '#042f66',
+                  backgroundColor: '#222',
                 },
                   headerTintColor: '#fff',
                   headerTitleStyle: {
-                    fontWeight: 'bold',
+                    fontWeight: 'normal',
                   },
                 }}
           />
@@ -45,11 +46,11 @@ export default function App() {
               options={{
                title: 'Camera',
                 headerStyle: {
-                  backgroundColor: 'rgba(52, 52, 52, 0.8)',
+                  backgroundColor: '#222',
                 },
                   headerTintColor: '#fff',
                   headerTitleStyle: {
-                    fontWeight: 'bold',
+                    fontWeight: 'normal'
                   },
               }} 
           />
@@ -65,7 +66,21 @@ export default function App() {
                   headerTitleStyle: {
                     fontWeight: 'bold',
                   },
-                }}
+              }}
+          />
+          <Stack.Screen 
+              name="VideoPreview" 
+              component={VideoPreview} 
+              options={{
+                title: '',
+                headerStyle: {
+                  backgroundColor: '#042f66',
+                },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {
+                    fontWeight: 'normal',
+                  },
+              }}
           />
       </Stack.Navigator>
     </NavigationContainer>

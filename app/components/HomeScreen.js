@@ -1,14 +1,13 @@
 import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-/**************
- * Home Screen
+/**
+ * Homescreen Component
+ * @param { navigation } param0 
  */
-
  function HomeScreen({ navigation }){
     return (
         <View style={styles.container}>
-   
             <TouchableOpacity 
                 style={styles.button}
                 onPress={() => navigation.navigate('Camera')}
