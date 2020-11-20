@@ -1,10 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, Button, ScrollView, TextInput } from 'react-native';
+import { v4 as uuidv4 } from 'uuid'
 
 import { Video } from 'expo-av'
 import VideoPlayer from 'expo-video-player'
 export default function App() {
+
+  const [video, videoList] = useState([])
+  const newName = useRef()
+  const newID = useRef()
+  const newURL = useRef()
+  const newCategory = useRef()
+
+  function addVideo(e) {
+    <>
+    <Text>Video name: </Text>
+    <TextInput
+      onChangeText={text => setText(text)}
+      value={text}
+    />
+    <Text>Url: </Text>
+    <TextInput
+      onChangeText={text => setText(text)}
+      value={text}
+    />
+    const nameInput = newName.current.value
+    const urlInput = newURL.current.value
+
+    if (nameInput === '') return
+    videoList(preVideo => {
+      return [...preVideo, {name: nameInput, id: uuidv4(), url: urlInput}]
+    })
+    </>
+  }
 
   // video categories
   const [introduction, setVideos1] = React.useState(
@@ -75,7 +104,9 @@ export default function App() {
 
   return (
     <ScrollView style={styles.WebViewContainer}>
-      <Text style={styles.welcome}>Welcome</Text>
+    <View style={styles.redView}>
+      <Text style={styles.welcome}>LeaseMagnets Welcome</Text>
+    </View>
       
     <Text style={styles.section}>{"\n"}WELCOME{"\n"}</Text>
     {introduction.map(((video, idx) => {
@@ -92,12 +123,7 @@ export default function App() {
         </>
       )
     }))}
-      
-        {/*
-        <View style={styles.buttonTitle}>
-          <Button title={videos.name}/>
-        </View>
-        */}
+    
       <Text style={styles.horizontal_lines}>______________________________________________</Text>
       <Text style={styles.section}>FLOOR PLAN{"\n"}</Text>
       <View style={styles.container}>
@@ -106,10 +132,21 @@ export default function App() {
             <>
             <View style={styles.container}>
               <View style={styles.column}>
-                <View style={styles.buttonTitle}>
-                  <Button title={video.name}/>
+                <View style={styles.videoView}>
+                <VideoPlayer
+                  width= {100}
+                  height= {125}
+                  videoProps={{
+                    shouldPlay: true,
+                    resizeMode: Video.RESIZE_MODE_CONTAIN,
+                    source: {
+                      uri: 'https://uploads-ssl.webflow.com/5e45b17b74507185e599a039/5f95fe348b955b74d1fb8704_commons-intro-transcode.mp4',
+                    },
+                  }}
+                  inFullscreen={false}
+                />
+                  <Text style={styles.names}>{video.name}</Text>
                 </View>
-                <Text style={styles.names}>{video.name}</Text>
               </View>
             </View>
             </>
@@ -125,35 +162,90 @@ export default function App() {
           <>
           <View style ={styles.container}>
             <View style={styles.column}>
-              <View style={styles.buttonTitle}>
-                <Button title={video.name} />
+              <View style={styles.videoView}>
+              <VideoPlayer
+                width={100}
+                height={125}
+                videoProps={{
+                  shouldplay: true,
+                  resizeMode: video.RESIZE_MODE_CONTAIN,
+                  source:{
+                    uri: 'https://uploads-ssl.webflow.com/5e45b17b74507185e599a039/5f95fe348b955b74d1fb8704_commons-intro-transcode.mp4',   
+                  },
+                }}
+                inFullscreen={false}
+              />
+                <Text style={styles.names}>{video.name}</Text>
               </View>
-              <Text style={styles.names}>{video.name}</Text>
             </View>
           </View>
-            {/* <View style={styles.buttonTitle}>
-              <Button title={video.name} />
-            </View> */}
-
-            {/*<Text>{video.name}</Text>
-            <Button title={video.name} />
-            
-            <VideoPlayer
-              videoProps={{
-                shouldPlay: false,
-                resizeMode: Video.RESIZE_MODE_CONTAIN,
-                source: {
-                  uri: 'https://uploads-ssl.webflow.com/5e45b17b74507185e599a039/5f95fe348b955b74d1fb8704_commons-intro-transcode.mp4',
-                },
-              }}
-              inFullscreen={false}
-              height={250}
-            />*/}
           </>
         );
       }))}
       </View>
+      
+      <Text style={styles.horizontal_lines}>______________________________________________</Text>
+      <Text style={styles.section}>THANK YOU{"\n"}</Text>
+      <View style={styles.container}>
+      {thank_you.map(((video, idx) => {
+        return (
+          <>
+          <View style ={styles.container}>
+            <View style={styles.column}>
+               <View style={styles.videoView}>
+                <VideoPlayer  
+                  width= {100}
+                  height={125}
+                  videoProps={{
+                    shouldPlay: true,
+                    resizeMode: Video.RESIZE_MODE_CONTAIN,
+                    source: {
+                      uri: 'https://uploads-ssl.webflow.com/5e45b17b74507185e599a039/5f95fe348b955b74d1fb8704_commons-intro-transcode.mp4', 
+                    },
+                  }}
+                  inFullscreen={false}
+                />
+                <Text style={styles.names}>{video.name}</Text>
+              </View>
+            </View>
+          </View>
+          </>
+        )
+      }))}
+      </View>
+
+      <Text style={styles.horizontal_lines}>______________________________________________</Text>
+      <Text style={styles.section}>MISCELLANEOUS{"\n"}</Text>
+      <View style={styles.container}>
+      {miscellaneous.map(((video, idx) => {
+        return (
+          <>
+          <View style ={styles.container}>
+            <View style={styles.column}>
+              <View style={styles.videoView}>
+              <VideoPlayer 
+                width= {100}
+                height= {125}
+                videoProps={{
+                  shouldPlay: true,
+                  resizeMode: Video.RESIZE_MODE_CONTAIN,
+                  source: {
+                    uri: 'https://uploads-ssl.webflow.com/5e45b17b74507185e599a039/5f95fe348b955b74d1fb8704_commons-intro-transcode.mp4',
+                  },
+                }} 
+                inFullscreen={false}
+              />
+                <Text style={styles.names}>{video.name}</Text>
+              </View>
+            </View>
+          </View>
+          </>
+        )
+      }))}
+      </View>
+
       <StatusBar style="auto" />
+      <Text style={styles.horizontal_lines}>______________________________________________</Text>
       <View style = {styles.container}>
         <View style={styles.addButton}>
           <Button 
@@ -163,7 +255,7 @@ export default function App() {
         </View>
       </View>
         <Text>Add New Floor Plan</Text>
-    </ScrollView>
+  </ScrollView>
   );
 }
 
@@ -173,7 +265,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     //justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 7,
     flexDirection: 'row'
     
   },
@@ -190,7 +282,7 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: "rgb(204, 209, 209)",
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     borderRadius: 10,
     //padding: 10,
   },
@@ -220,6 +312,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginLeft: 10,
     marginTop: 1,
+    fontWeight: 'bold',
   },
   vertical_lines: {
     //borderWidth: 0.5,
@@ -233,9 +326,10 @@ const styles = StyleSheet.create({
   }, 
   welcome: {
     fontWeight:"bold",
+    color: 'white',
     fontSize: 25,
     marginTop: 50,
-    marginLeft: 10,
+    marginLeft: 15,
   },
   names: {
     justifyContent: 'center',
@@ -245,5 +339,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     fontSize: 15,
     //paddingLeft: 10,
+  },
+  redView: {
+    width: 450,
+    height: 90,
+    backgroundColor: "rgb(255, 47, 47)",
+  },
+  videoView:{
+    width: 100,
+    height: 125,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 10,
+    fontSize: 10,
   },
 });
