@@ -81,7 +81,7 @@ function CameraScreen() {
     setIsCameraReady(true);
   };
 
-  // Takes a picture
+  /* Takes a picture
   const takePicture = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
@@ -94,7 +94,7 @@ function CameraScreen() {
         console.log("picture source", source);
       }
     }
-  };
+  };*/
 
   // Record a video
   const recordVideo = async () => {
