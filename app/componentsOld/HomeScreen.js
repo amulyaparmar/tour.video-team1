@@ -16,17 +16,17 @@ import Constants from 'expo-constants';
   
   const [videos, setVideos] = useState([
     {
-    "name": "Welcome to Your Apt",
+    "name": "Welcome",
     'url' : 'https://storage.googleapis.com/leasemagnets-cloud-storage/sample-intro.mp4',
     "id": "c1r342c2",
     },
     {
-    "name": "2 Bedroom",
+    "name": "2 Bedrooms",
     'url' : 'https://storage.googleapis.com/leasemagnets-cloud-storage/2bedroom-sample.mp4',
     "id": "c1r342d2",
     },
     {
-      "name": "Awesome Pool",
+      "name": "Pool",
       'url' : 'https://storage.googleapis.com/leasemagnets-cloud-storage/sample-intro.mp4',
       "id": "c1r342e2",
     }

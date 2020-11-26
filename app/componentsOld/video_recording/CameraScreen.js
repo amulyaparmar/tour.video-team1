@@ -11,7 +11,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage'
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
-import VideoEntity from "../Enities/VideoEntity"
+import VideoEntity from "../Enities/Space"
 import uuid4 from "uuid4";
 
 const STORAGE_KEY = '@videos'
