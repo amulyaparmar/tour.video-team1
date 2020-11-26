@@ -1,12 +1,15 @@
 import * as React from 'react'
-import {colors, padding, margin, fonts, dimensions} from '../../styles/BaseStyles'
+import {colors, padding, margin, fonts } from '../../styles/BaseStyles'
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 /**
  * This is a single Apartment 
  * component as diplayed on the Home Page
  */
-function Apartment({name, address, source}){
+function Apartment({name, address, source, handleTakeTour }){      
+    
     return(
         <View style={styles.apartment_container}>
               <Image style={styles.thumbnail} source={source} />
@@ -17,7 +20,7 @@ function Apartment({name, address, source}){
                 <Text>{address.postal}</Text>
                 
                 <View style={styles.menu}>
-                    <TouchableOpacity onPress={() => alert("Coming Soon!")}>
+                    <TouchableOpacity onPress={() => handleTakeTour(name)}>
                       <FontAwesome5 style={styles.menuIcon} name='door-open' />
                     </TouchableOpacity>
                    <TouchableOpacity onPress={() => alert("Sorry, you are not allowed to delete this.")} >

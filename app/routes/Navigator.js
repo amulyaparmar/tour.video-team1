@@ -4,7 +4,16 @@ import { createStackNavigator } from '@react-navigation/stack'
 import {  colors, fonts  } from '../styles/BaseStyles';
 import Home from '../components/Home'
 import Tour from '../components/Tour'
-
+/**
+ * Reference Notes
+ * After creating a navigator, each component defined in the stack nvigator
+ * automatically gets additional props succh as:
+ * 
+ * navigation: to move around pages
+ * route: to collect parameters etc ...
+ * 
+ * See: https://reactnavigation.org/docs/navigation-prop/
+ */
 function Navigator() {
   const Stack = createStackNavigator();
   return(
@@ -21,7 +30,7 @@ function Navigator() {
                   headerTintColor: '#fff',
                   headerTitleStyle: {
                     fontWeight: 'bold',
-                    fontSize: fonts.sm
+                    fontSize: fonts.md
                   },
                 }}
           />
@@ -33,9 +42,10 @@ function Navigator() {
                 headerStyle: {
                   backgroundColor: colors.orange,
                 },
-                  headerTintColor: '#fff',
-                  headerTitleStyle: {
-                    fontWeight: 'normal',
+                   headerTintColor: '#fff',
+                   headerTitleStyle: {
+                   fontWeight: 'bold',
+                   fontSize: fonts.md
                   },
                 }}
           />

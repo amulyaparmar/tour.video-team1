@@ -1,5 +1,5 @@
-import uva from './images/uva.jpg'
-import quad from './images/quad.jpg'
+import uva from '../images/uva.jpg'
+import quad from '../images/quad.jpg'
 import mesacommons from '../images/mesacomons.jpg'
 
 const apartments = [
