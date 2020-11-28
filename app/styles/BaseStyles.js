@@ -2,7 +2,7 @@
  * This File Contains styles that are used all accros the platform
  * Path: app/styles/BaseStyles.js
  */
-import {StyleSheet, Dimensions } from 'react-native'
+import { Dimensions } from 'react-native'
 
 // Sceen Dimensions
 export const dimensions = {
@@ -27,7 +27,8 @@ export const padding = {
      sm: 10,
      md: 20,
      lg: 30,
-     xl: 40
+     xl: 40,
+     xxl: 60
 }
 
 // Margin
@@ -37,13 +38,15 @@ export const margin = {
      sm: 10,
      md: 20,
      lg: 30,
-     xl: 40
+     xl: 40,
+     xxl: 60
 }
 // Fonts
 export const fonts = {
-  sm: 12,
-  md: 18,
-  lg: 28,
-  xxl: 60,
-  primary: 'Cochin'
+      sm: 12,
+      md: 18,
+      lg: 28,
+      xl: 40,
+      xxl: 60,
+      primary: 'Cochin'
 }

@@ -38,4 +38,4 @@ const apartments = [
   }
 ]
 
-export default apartments
+export default apartments;

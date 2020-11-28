@@ -2,25 +2,24 @@ import * as React from 'react'
 import {colors, padding, margin, fonts } from '../../styles/BaseStyles'
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import spaces from '../../data/spaces'
 /**
  * This is a single Apartment 
  * component as diplayed on the Home Page
  */
-function Apartment({name, address, source, handleTakeTour }){      
+function Apartment({ apt_id , name, address, source, handleTakeTour }){      
     
     return(
         <View style={styles.apartment_container}>
               <Image style={styles.thumbnail} source={source} />
               <View style={styles.info_container}>
                 <Text style={styles.name}>{name}</Text>
-                <Text>{address.street}</Text>
-                <Text>{address.city} {address.state}. </Text>
-                <Text>{address.postal}</Text>
+                <Text style={styles.text}>{address.street}</Text>
+                <Text style={styles.text}>{address.city} {address.state}. </Text>
+                <Text style={styles.text}>{address.postal}</Text>
                 
                 <View style={styles.menu}>
-                    <TouchableOpacity onPress={() => handleTakeTour(name)}>
+                    <TouchableOpacity onPress={() => handleTakeTour(name, source, apt_id)}>
                       <FontAwesome5 style={styles.menuIcon} name='door-open' />
                     </TouchableOpacity>
                    <TouchableOpacity onPress={() => alert("Sorry, you are not allowed to delete this.")} >
@@ -41,7 +40,8 @@ const styles = StyleSheet.create({
       flexWrap: 'wrap',
       flexDirection: 'row',
       borderBottomWidth: 1,
-      borderBottomColor: colors.gray
+      borderBottomColor: colors.gray,
+      borderRadius: 5
     },
     info_container :{
       flex: 1,
@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
     menuIcon: {
       fontSize: fonts.lg,
       color: colors.orange
+    },
+    text: {
+      color: colors.black
     }
 
 })

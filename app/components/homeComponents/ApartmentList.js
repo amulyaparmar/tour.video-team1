@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { ScrollView, View} from 'react-native';
+import React from 'react';
+import { ScrollView } from 'react-native';
 import Apartment  from './Apartment'
 import NoApartment from './NoApartments'
 
@@ -9,7 +9,8 @@ function ApartmentList({ apartments, handleTakeTour }){
   // otherwise return a message
   if(apartments.length > 0){
       apartments = apartments.map(apartment => {
-        return <Apartment key={apartment.id} 
+        return <Apartment key={apartment.id}
+                          apt_id={apartment.id} 
                           name={apartment.building_name} 
                           address={apartment.address} 
                           source={apartment.image_source}
