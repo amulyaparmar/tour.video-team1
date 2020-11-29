@@ -1,27 +1,32 @@
-import React from "react";
-import HomeScreen from './components/HomeScreen'
-import CameraScreen from './components/video_recording/CameraScreen'
-import { NavigationContainer, StackActions } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 
-const Stack = createStackNavigator();
+import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import {  colors, fonts } from './styles/BaseStyles'
+import Constants from 'expo-constants';
+import Navigator from './routes/Navigator'
+
+
+// You can import from local files
+// import Home from './components/Home';
+
+// or any pure javascript modules available in npm
+//import { Card } from 'react-native-paper';
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen 
-              name="Home" 
-              component={HomeScreen} 
-              options={{title: 'Home'}}
-          />
-          <Stack.Screen 
-              name="Camera" 
-              component={CameraScreen} 
-          />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+        <Navigator />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // paddingTop: Constants.statusBarHeight,
+    backgroundColor: colors.white,
+  },
+});
 
  
 

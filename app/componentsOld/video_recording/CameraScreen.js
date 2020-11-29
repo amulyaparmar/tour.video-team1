@@ -8,13 +8,13 @@ import {
   TouchableOpacity,       // To make views respond properly to touches
   SafeAreaView,           // For user interface
 } from "react-native";    // Keep these in this file
-
+import AsyncStorage from '@react-native-community/async-storage'
 import { Camera } from "expo-camera";
 import { Video } from "expo-av";
-import AsyncStorage from '@react-native-community/async-storage';
+import VideoEntity from "../Enities/Space"
 import uuid4 from "uuid4";
 
-const STORAGE_KEY = uuid4()
+const STORAGE_KEY = '@videos'
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const closeButtonSize = Math.floor(WINDOW_HEIGHT * 0.032);
 const captureSize = Math.floor(WINDOW_HEIGHT * 0.09);
@@ -26,20 +26,62 @@ function CameraScreen() {
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [isVideoRecording, setIsVideoRecording] = useState(false);
   const [videoSource, setVideoSource] = useState(null);
+  const [videos, setVideos] = useState([]); 
   const cameraRef = useRef();
+
+  // UseEffect gets run once to load the video list
+  useEffect(() => {
+    (async () => {
+      try {
+        const stored_videos = await AsyncStorage.getItem(STORAGE_KEY)
+        if (stored_videos != null) setVideos(JSON.parse(stored_videos))
+      } catch (error) {
+        console.error(error)      
+      }
+    })();
+  },[])
+
+  // Gets Access Permission From The Phone
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
-  }, []);
+  },[]);
+
+   //Save the video to Async Storage | TODO: Ongoing feature
+  const saveVideos = async () => {
+    try {
+      console.log("\n\n\n" + JSON.stringify(videos) + "\n\n\n")
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(videos))  
+      alert('Video Saved Successfully')
+    } catch (e) {
+      alert('Failed to save the video')
+    }
+  }
+
+  const testUpdateVideos = async (videos) => {
+      setVideos(videos)
+      return
+  }
+
+  // Adds a new video
+  const handleAddNewVideo = async ( source ) => {
+      setVideoSource(source);
+      if (source != null){
+        const new_video = new VideoEntity(uuid4(), 'Video Demo', source)  // New video Created
+        //setVideos([...videos, new_video])
+        await testUpdateVideos([new_video, ...videos])
+        saveVideos() // Save the video
+      }
+  }
 
   // Sets the camera to ready
   const onCameraReady = () => {
     setIsCameraReady(true);
   };
 
-  // Takes a picture
+  /* Takes a picture
   const takePicture = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
@@ -52,10 +94,11 @@ function CameraScreen() {
         console.log("picture source", source);
       }
     }
-  };
+  };*/
 
   // Record a video
   const recordVideo = async () => {
+    console.log("Recording has Started")
     if (cameraRef.current) {
       try {
         const videoRecordPromise = cameraRef.current.recordAsync();
@@ -63,35 +106,25 @@ function CameraScreen() {
           setIsVideoRecording(true);
           const data = await videoRecordPromise;
           const source = data.uri;
-          console.log('\n\n\n' + source + '\n\n\n')
-          if (source) {
+          if (source != null) {
             setIsPreview(true);
-            console.log("video source", source);
-            setVideoSource(source);
+            handleAddNewVideo( source );
           }
         }
       } catch (error) {
         console.warn(error);
       }
     }
+    console.log("Recording has ended")
   };
 
-// Save the video to Async Storage | TODO: Ongoing feature
-const saveVideo = async () => {
-  try {
-    await AsyncStorage.setItem(STORAGE_KEY, source)
-    alert('Video Saved Successfully')
-  } catch (e) {
-    alert('Failed to save the video')
-  }
-}
-
-  // Storps the recording
+  // Stops the recording
   const stopVideoRecording = () => {
     if (cameraRef.current) {
       setIsPreview(false);
       setIsVideoRecording(false);
       cameraRef.current.stopRecording();
+
     }
   };
 
@@ -129,7 +162,7 @@ const saveVideo = async () => {
     <Video
       source={{ uri: videoSource }}
       shouldPlay={true}
-      style={styles.media}
+      style={ {width: Dimensions.get('screen').width, height: Dimensions.get('screen').height}}
     />
   );
   
@@ -147,11 +180,11 @@ const saveVideo = async () => {
         <Text style={styles.text}>{"Flip"}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={0.9}
         disabled={!isCameraReady}
         onLongPress={recordVideo}
         onPressOut={stopVideoRecording}
-        onPress={takePicture}
+        //onPress={takePicture}  Not Pictures Allowed ATM
         style={styles.capture}
       />
     </View>
@@ -189,7 +222,11 @@ export default CameraScreen
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFill,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   closeButton: {
     position: "absolute",
@@ -205,7 +242,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   media: {
-    ...StyleSheet.absoluteFill,
+   ...StyleSheet.absoluteFill,
   },
   closeCross: {
     width: "68%",
