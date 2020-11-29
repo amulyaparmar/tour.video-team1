@@ -12,7 +12,7 @@ export const dimensions = {
 
 // Colors
 export const colors = {
-    orange: '#fc7b03',
+    orange: '#eb3734',
     gray: '#a8a8a8',
     white: '#fcfcfc',
     black: '#000000',

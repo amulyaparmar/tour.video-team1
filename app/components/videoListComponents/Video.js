@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Video } from 'expo-av';
-import { colors, margin, padding } from '../../styles/BaseStyles';
+import { padding } from '../../styles/BaseStyles';
 
-
-function Space({ videoId ,videoName, videoSource, aptId }){
+// categoryName, videos, buildingId
+function VideoComp({ videoId ,videoName, videoSource, buildingId }){
     
     const [play,setPlay] = useState(false)
     
-
     return(
         <View style={styles.container}>
            <View style={styles.thumbNailContainer}>
@@ -35,7 +34,7 @@ function Space({ videoId ,videoName, videoSource, aptId }){
     
 }
 
-export default Space
+export default VideoComp;
 
 const styles = StyleSheet.create({
     container:{

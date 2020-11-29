@@ -3,16 +3,16 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import {colors, margin, fonts, dimensions } from '../../styles/BaseStyles';
 import { Text, View, StyleSheet} from 'react-native';
 
-function NoSpaces(){
+function NoCategories(){
         return(
             <View style={styles.container}>
                 <FontAwesome5 name='door-closed' style={styles.icon} />
-                <Text style={styles.text}>No Videos Yet!</Text>
+                <Text style={styles.text}>Error: No Categories Specified!</Text>
             </View>
         )
 }
 
-export default NoSpaces;
+export default NoCategories;
 
 const styles = StyleSheet.create({
     container: {
