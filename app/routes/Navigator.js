@@ -2,8 +2,9 @@ import React from 'react'
 import { NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import {  colors, fonts  } from '../styles/BaseStyles';
-import Home from '../components/Home'
-import Tour from '../components/Tour'
+import HomeScreen from '../components/HomeScreen'
+import TourScreen from '../components/TourScreen'
+import VideoListScreen from '../components/VideoListScreen'
 /**
  * Reference Notes
  * After creating a navigator, each component defined in the stack nvigator
@@ -21,7 +22,7 @@ function Navigator() {
         <Stack.Navigator>
           <Stack.Screen 
               name="Home" 
-              component={Home} 
+              component={HomeScreen} 
               options={{
                 title: 'Lease Magnets',
                 headerStyle: {
@@ -36,7 +37,7 @@ function Navigator() {
           />
           <Stack.Screen 
               name="Tour" 
-              component={Tour} 
+              component={TourScreen} 
               options={{
                 title: 'Tour',
                 headerStyle: {
@@ -48,6 +49,21 @@ function Navigator() {
                    fontSize: fonts.md
                   },
                 }}
+          />
+          <Stack.Screen 
+              name="Video" 
+              component={VideoListScreen} 
+              options={{
+                title: 'Videos',
+                headerStyle: {
+                  backgroundColor: colors.orange,
+                },
+                   headerTintColor: '#fff',
+                   headerTitleStyle: {
+                   fontWeight: 'bold',
+                   fontSize: fonts.md
+                  },
+              }}
           />
         </Stack.Navigator> 
       </NavigationContainer>

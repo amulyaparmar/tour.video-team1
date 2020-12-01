@@ -2,7 +2,7 @@ import uva from '../images/uva.jpg'
 import quad from '../images/quad.jpg'
 import mesacommons from '../images/mesacomons.jpg'
 
-const apartments = [
+const buildings = [
   {
     id: 1,
     building_name: 'University Village',
@@ -38,4 +38,4 @@ const apartments = [
   }
 ]
 
-export default apartments;
+export default buildings;

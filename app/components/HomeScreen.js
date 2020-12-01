@@ -2,19 +2,19 @@ import React from 'react';
 import { colors , dimensions, fonts, margin } from '../styles/BaseStyles';
 import { View, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import ApartmentList from './homeComponents/ApartmentList'
-import apartments from '../data/apartments'
+import BuildingList from './homeComponents/BuildingList'
+import buildings from '../data/buildings'
 
-export default function Home({navigation}) {
+function HomeScreen({navigation}) {
   
   // Navigates to the Tour Page
-   const handleTakeTour = (name, source, apt_id) => {  
-      navigation.navigate('Tour', {name, source, apt_id}); // Pass the list of spaces
+   const handleGoToCatScreen = (name, source, building_id) => {  
+      navigation.navigate('Tour', {name, source, building_id});
    }  
 
   return (
     <View style={styles.container}>
-      <ApartmentList style={styles.apartments} apartments={apartments} handleTakeTour={handleTakeTour}/>   
+      <BuildingList style={styles.buildings} buildings={buildings} handleGoToCatScreen={handleGoToCatScreen}/>   
       <View style={styles.menu}>
         <TouchableOpacity style={styles.button} onPress={() => alert("Coming Soon!")}>
           <AntDesign style={styles.plusIcon} name='pluscircle'/>
@@ -23,6 +23,8 @@ export default function Home({navigation}) {
     </View>
   );
 }
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   },
   plusIcon : {
-    fontSize: fonts.xxl,
+    fontSize: fonts.xl,
     color: colors.orange,
   },
   button:{

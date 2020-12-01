@@ -1,14 +1,14 @@
-import * as React from 'react'
+import React from 'react'
 import {colors, padding, margin, fonts } from '../../styles/BaseStyles'
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import spaces from '../../data/spaces'
+
 /**
  * This is a single Apartment 
  * component as diplayed on the Home Page
  */
-function Apartment({ apt_id , name, address, source, handleTakeTour }){      
-    
+function Building({ building_id , name, address, source, handleGoToCatScreen }){      
+  
     return(
         <View style={styles.apartment_container}>
               <Image style={styles.thumbnail} source={source} />
@@ -19,7 +19,7 @@ function Apartment({ apt_id , name, address, source, handleTakeTour }){
                 <Text style={styles.text}>{address.postal}</Text>
                 
                 <View style={styles.menu}>
-                    <TouchableOpacity onPress={() => handleTakeTour(name, source, apt_id)}>
+                    <TouchableOpacity onPress={() => handleGoToCatScreen(name, source, building_id)}>
                       <FontAwesome5 style={styles.menuIcon} name='door-open' />
                     </TouchableOpacity>
                    <TouchableOpacity onPress={() => alert("Sorry, you are not allowed to delete this.")} >
@@ -31,7 +31,7 @@ function Apartment({ apt_id , name, address, source, handleTakeTour }){
     )
 }
 
-export default Apartment
+export default Building
 
 const styles = StyleSheet.create({
     apartment_container:{

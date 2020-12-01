@@ -3,24 +3,19 @@ import { colors , margin, fonts, dimensions, padding } from '../styles/BaseStyle
 import { View, StyleSheet, TouchableOpacity, Modal, Text} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons'; 
-import SpaceList from './tourComponents/SpaceList';
-import TourHeader from './tourComponents/TourHeader';
-import spaces from '../data/spaces';
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import VideoList from './videoListComponents/VideoList';
+import VideoHeader from './videoListComponents/VideoHeader';
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
-/**
- * TODO: Move Image Funtionalities to another file
- * @param {} param0 
- */
 
-
-function Tour({route, navigation}){
+function VideoListScreen({route, navigation}){
   const [spaceVideos, setSpaceVideos] = useState([])
   const [addModalOpen, setAddModelOpen] = useState(false)
 
   // Loads all the existing videos
   useEffect(() =>{
-    setSpaceVideos(spaces.filter(space => space.apt_id == route.params.apt_id))
+    setSpaceVideos(route.params.videos)
   }, [])
 
   // Getting permission to access camera roll
@@ -47,7 +42,7 @@ function Tour({route, navigation}){
       console.log("Evevrything ran Smoothly!")
   }
 
-  return videoPicked
+  return videoPicked;
  }
 
   // Records a new video
@@ -61,12 +56,14 @@ function Tour({route, navigation}){
     console.log(videoPicked)
   }
 
+   
+
   return (
     <View style={styles.container}>
-      <TourHeader name={route.params.name} source={route.params.source} />
+      <VideoHeader category={route.params.category} thumbnail_source={route.params.thumbnail_source} />
       <Modal visible={addModalOpen} animationType='slide'>
         <View style={styles.modalContainer}>
-          <TourHeader name={route.params.name} source={route.params.source} />
+          <VideoHeader category={route.params.category} thumbnail_source={route.params.thumbnail_source} />
           <TouchableOpacity onPress={()=> setAddModelOpen(!addModalOpen)}>
               <AntDesign name="close" style={styles.close} />
           </TouchableOpacity>
@@ -81,12 +78,15 @@ function Tour({route, navigation}){
         </View>
       </Modal>
 
-      <SpaceList spaceVideos={spaceVideos} />
+      <VideoList spaceVideos={spaceVideos} />
       <View style={styles.menu}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
           <Entypo style={styles.menuIcon} name="home" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={()=> setAddModelOpen(!addModalOpen)}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Tour')}>
+          <FontAwesome5 style={styles.menuIcon} name="list-ul" />
+        </TouchableOpacity>
+        <TouchableOpacity  style={styles.button} onPress={()=> setAddModelOpen(!addModalOpen)}>
           <AntDesign style={styles.menuIcon} name='pluscircle'/>
         </TouchableOpacity>
       </View>
@@ -94,7 +94,7 @@ function Tour({route, navigation}){
   )
 }
 
-export default Tour;
+export default VideoListScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -150,7 +150,4 @@ const styles = StyleSheet.create({
      alignSelf: 'flex-end',
      margin: margin.lg
   },
-  test:{
-    margin: margin.xxl
-  }
 });
