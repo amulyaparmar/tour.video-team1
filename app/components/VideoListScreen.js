@@ -28,7 +28,7 @@ function VideoListScreen({route, navigation}){
         }
       }
     })();
-  }, []);
+  },[]);
 
   // Video Picker
   const pickVideo = async () => {
@@ -46,17 +46,16 @@ function VideoListScreen({route, navigation}){
  }
 
   // Records a new video
-  const handleCreateVideo = () => {
-      // TODO: Implement this
-  }
+  const handleGoCameraScreen = (category, default_name, building_id) => { 
+      navigation.navigate('Camera', {category, default_name, building_id}); // Navigates to the Camera page
+      setAddModelOpen(!addModalOpen); // Closes the modal
+   } 
 
   // Uploads Video from camera roll
   const handleUploadVideo = async () => {
     const videoPicked = await pickVideo();
     console.log(videoPicked)
   }
-
-   
 
   return (
     <View style={styles.container}>
@@ -68,11 +67,11 @@ function VideoListScreen({route, navigation}){
               <AntDesign name="close" style={styles.close} />
           </TouchableOpacity>
           <View style={styles.modal}>
-            <TouchableOpacity style={styles.option} onPress={()=> setAddModelOpen(!addModalOpen)}>
+            <TouchableOpacity style={styles.option} onPress={() => handleGoCameraScreen("Welcome", "Video-1", 1)}>
               <Text style={styles.text}>Create Video</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.option} onPress={handleUploadVideo}>
-                <Text style={styles.text} >Upload Video</Text>
+                <Text style={styles.text}>Upload Video</Text>
             </TouchableOpacity>
           </View>
         </View>

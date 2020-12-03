@@ -2,6 +2,7 @@ import uva from '../images/uva.jpg'
 import quad from '../images/quad.jpg'
 import mesacommons from '../images/mesacomons.jpg'
 
+
 const buildings = [
   {
     id: 1,

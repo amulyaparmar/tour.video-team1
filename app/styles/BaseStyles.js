@@ -1,5 +1,5 @@
 /**
- * This File Contains styles that are used all accros the platform
+ * This File Contains styles that are used all across the platform
  * Path: app/styles/BaseStyles.js
  */
 import { Dimensions } from 'react-native'

@@ -1,6 +1,6 @@
 import AddressEntity from './AddressEntity'
 
-class ApartmentEntity {
+class BuildingEntity {
      constructor(id, building_name, street, city, state, postal, image_source){
         this.id = id;
         this.building_name = building_name;
@@ -15,4 +15,4 @@ class ApartmentEntity {
  }
 
 
-export default ApartmentEntity
+export default BuildingEntity
