@@ -40,7 +40,6 @@ function VideoScreen() {
     const clearAllVideos = async () => {
         try {
             await AsyncStorage.removeItem(STORAGE_KEY)
-            setVideos([])
         } catch (error) {
             console.error(error)
         }

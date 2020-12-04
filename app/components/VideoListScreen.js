@@ -8,16 +8,29 @@ import VideoList from './videoListComponents/VideoList';
 import VideoHeader from './videoListComponents/VideoHeader';
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-community/async-storage';
+import keys from '../data/testingDB';
+import uuid4 from "uuid4";
+
 
 function VideoListScreen({route, navigation}){
-  const [spaceVideos, setSpaceVideos] = useState([])
-  const [addModalOpen, setAddModelOpen] = useState(false)
+  const [spaceVideos, setSpaceVideos] = useState(route.params.videos);
+  const [addModalOpen, setAddModelOpen] = useState(false);
 
-  // Loads all the existing videos
-  useEffect(() =>{
-    setSpaceVideos(route.params.videos)
-  }, [])
 
+  useEffect(() => {
+    AsyncStorage.getItem(keys.VIDEOS).then((saved_videos) =>{
+      if(saved_videos){
+        const filtered_videos =  JSON.parse(saved_videos).filter((video) => {
+          return (video.category == route.params.category && video.building_id == route.params.building_id)
+        })
+        setSpaceVideos([...spaceVideos, ... filtered_videos]);
+      }
+    })
+  },[])
+
+
+  
   // Getting permission to access camera roll
   useEffect(() => {
     (async () => {
@@ -28,7 +41,7 @@ function VideoListScreen({route, navigation}){
         }
       }
     })();
-  }, []);
+  },[]);
 
   // Video Picker
   const pickVideo = async () => {
@@ -46,9 +59,10 @@ function VideoListScreen({route, navigation}){
  }
 
   // Records a new video
-  const handleCreateVideo = () => {
-      // TODO: Implement this
-  }
+  const handleGoCameraScreen = (category, default_name, building_id) => { 
+      navigation.navigate('Camera', {category, default_name, building_id}); // Navigates to the Camera page
+      setAddModelOpen(!addModalOpen); // Closes the modal
+   } 
 
   // Uploads Video from camera roll
   const handleUploadVideo = async () => {
@@ -56,23 +70,21 @@ function VideoListScreen({route, navigation}){
     console.log(videoPicked)
   }
 
-   
-
   return (
     <View style={styles.container}>
       <VideoHeader category={route.params.category} thumbnail_source={route.params.thumbnail_source} />
       <Modal visible={addModalOpen} animationType='slide'>
         <View style={styles.modalContainer}>
           <VideoHeader category={route.params.category} thumbnail_source={route.params.thumbnail_source} />
-          <TouchableOpacity onPress={()=> setAddModelOpen(!addModalOpen)}>
+          <TouchableOpacity onPress={() => setAddModelOpen(!addModalOpen)}>
               <AntDesign name="close" style={styles.close} />
           </TouchableOpacity>
           <View style={styles.modal}>
-            <TouchableOpacity style={styles.option} onPress={()=> setAddModelOpen(!addModalOpen)}>
+            <TouchableOpacity style={styles.option} onPress={() => handleGoCameraScreen("Welcome", "Video-1", 1)}>
               <Text style={styles.text}>Create Video</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.option} onPress={handleUploadVideo}>
-                <Text style={styles.text} >Upload Video</Text>
+                <Text style={styles.text}>Upload Video</Text>
             </TouchableOpacity>
           </View>
         </View>

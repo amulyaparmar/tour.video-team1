@@ -1,14 +1,15 @@
 import React from 'react'
-import { NavigationContainer} from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {  colors, fonts  } from '../styles/BaseStyles';
-import HomeScreen from '../components/HomeScreen'
-import TourScreen from '../components/TourScreen'
-import VideoListScreen from '../components/VideoListScreen'
+import HomeScreen from '../components/HomeScreen';
+import TourScreen from '../components/TourScreen';
+import VideoListScreen from '../components/VideoListScreen';
+import CameraScreen from '../components/CameraScreen';
 /**
  * Reference Notes
  * After creating a navigator, each component defined in the stack nvigator
- * automatically gets additional props succh as:
+ * automatically gets additional props such as:
  * 
  * navigation: to move around pages
  * route: to collect parameters etc ...
@@ -55,6 +56,21 @@ function Navigator() {
               component={VideoListScreen} 
               options={{
                 title: 'Videos',
+                headerStyle: {
+                  backgroundColor: colors.orange,
+                },
+                   headerTintColor: '#fff',
+                   headerTitleStyle: {
+                   fontWeight: 'bold',
+                   fontSize: fonts.md
+                  },
+              }}
+          />
+          <Stack.Screen 
+              name="Camera" 
+              component={CameraScreen} 
+              options={{
+                title: "Camera",
                 headerStyle: {
                   backgroundColor: colors.orange,
                 },

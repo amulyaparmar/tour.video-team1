@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import { fonts, colors, margin, padding } from '../../styles/BaseStyles'
 
 function VideoHeader({category, thumbnail_source}){
-
+    
     return(
         <View style={styles.container}>
             <Image style={styles.imageThumbNail} source={thumbnail_source} />

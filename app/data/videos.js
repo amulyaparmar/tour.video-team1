@@ -87,5 +87,5 @@ const videos = [
 
 export {
   videos,
-  categories
+  categories,
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, Dimensions, TouchableOpacity, Text, Modal } from 'react-native'
 import { Video } from 'expo-av'
 
 function VideoPreview({source}){
