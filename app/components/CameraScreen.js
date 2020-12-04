@@ -214,7 +214,8 @@ function CameraScreen({route, navigation}) {
           source={videoSource}
           default_name={route.params.default_name}
           category={route.params.category}
-          building_id={route.params.building_id} 
+          building_id={route.params.building_id}
+          navigateTo={navigation.navigate} 
         />
   }
   return (

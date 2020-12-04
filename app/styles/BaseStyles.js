@@ -18,6 +18,7 @@ export const colors = {
     black: '#000000',
     blue: '#008fdb',
     beige: '#ffeed9',
+    light_gray: '#e9e9e9'
 }
 
 // Padding

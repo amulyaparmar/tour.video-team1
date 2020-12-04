@@ -12,7 +12,6 @@ import * as ImagePicker from 'expo-image-picker';
  * @param {} param0 
  */
 
-
 function TourScreen({route, navigation}){
   const [spaceVideos, setSpaceVideos] = useState([])
   const [addModalOpen, setAddModelOpen] = useState(false)
@@ -43,7 +42,7 @@ function TourScreen({route, navigation}){
       quality: 1,
   });
   if (!videoPicked.cancelled) {
-      console.log("Evevrything ran Smoothly!")
+      console.log("Evrything ran Smoothly!")
   }
 
   return videoPicked;
