@@ -52,33 +52,6 @@ function CameraScreen({route, navigation}) {
     })();
   },[]);
 
-   //Save the video to Async Storage | TODO: Ongoing feature
-  const saveVideos = async () => {
-    try {
-      console.log("\n\n\n" + JSON.stringify(videos) + "\n\n\n")
-      await AsyncStorage.setItem(keys.VIDEOS, JSON.stringify(videos))  
-      alert('Video Saved Successfully')
-    } catch (e) {
-      alert('Failed to save the video')
-    }
-  }
-
-  const testUpdateVideos = async (videos) => {
-      setVideos(videos)
-      return
-  }
-
-  // Adds a new video
-  const handleAddNewVideo = async ( source ) => {
-      setVideoSource(source);
-      if (source != null){
-        const new_video = new VideoEntity(uuid4(), route.params.builing_id ,route.params.default_name, route.params.category, source)  // New video Created
-        //setVideos([...videos, new_video])
-        await testUpdateVideos([new_video, ...videos])
-        saveVideos() // Save the video
-      }
-  }
-
   // Sets the camera to ready
   const onCameraReady = () => {
     setIsCameraReady(true);
@@ -165,7 +138,7 @@ function CameraScreen({route, navigation}) {
   // Adds the saveButton
   const renderSaveButton = () => (
     <TouchableOpacity onPress={() => setShowInputForm(true)} style={styles.saveButton}>
-      <Text style={styles.text} >Save</Text>
+      <Text style={styles.text}>Save</Text>
     </TouchableOpacity>
   )
   
