@@ -71,15 +71,13 @@ export default CategoryList;
 const styles = StyleSheet.create({
     categoryList:{
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         flexWrap: 'wrap',
-        marginLeft: 25,
     },
     container:{
         flex:1
     },
     searchBoxContainer:{
-        marginLeft: margin.md
     },
     searchBox:{
         borderWidth: 1,

@@ -46,7 +46,7 @@ function CameraScreen() {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === "granted");
-    })();
+    })(); 
   },[]);
 
    //Save the video to Async Storage | TODO: Ongoing feature

@@ -80,7 +80,7 @@ function VideoListScreen({route, navigation}){
               <AntDesign name="close" style={styles.close} />
           </TouchableOpacity>
           <View style={styles.modal}>
-            <TouchableOpacity style={styles.option} onPress={() => handleGoCameraScreen("Welcome", "Video-1", 1)}>
+            <TouchableOpacity style={styles.option} onPress={() => handleGoCameraScreen(route.params.category, "N/A", 1)}>
               <Text style={styles.text}>Create Video</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.option} onPress={handleUploadVideo}>
